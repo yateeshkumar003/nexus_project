@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact Form</title>
+  <link rel="stylesheet" href="contact.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="config.js"></script>
+</head>
+<body>
+  <form class="contact-form" id="contactForm" novalidate>
+    <h2>Contact Us</h2>
+    <label for="name"><strong>Name</strong> </label>
+    <input type="text" id="name" name="name" placeholder="Your full name" required />
+    <div class="error" id="nameError">Please enter your name.</div>
+
+    <label for="email"><strong>Email ID</strong> </label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required />
+    <div class="error" id="emailError">Please enter a valid email.</div>
+
+    <label for="phone"><strong>Contact Number</strong></label>
+    <input type="tel" id="phone" name="phone" placeholder="e.g. +91 12345 67890" pattern="[+\d\s]{7,15}" required />
+    <div class="error" id="phoneError">Please enter a valid contact number.</div>
+
+    <label for="query"><strong>Query</strong></label>
+    <textarea id="query" name="query" placeholder="Your message here..." required></textarea>
+    <div class="error" id="queryError">Please enter your query.</div>
+
+    <button type="submit" class = "button">Submit</button>
+  </form>
+
+  <script>
+    // Supabase client initialization
+    const SUPABASE_URL = atob(window.SUPABASE_URL_B64);
+    const SUPABASE_ANON_KEY = atob(window.SUPABASE_ANON_KEY_B64);
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Get reference to form
+    const contactForm = document.getElementById('contactForm');
+
+    // Add submit event listener
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      // Get form elements
+      const form = event.target;
+
+      // Simple client side validation example (add more as needed)
+      if (!form.name.value.trim()) {
+        alert('Please enter your name.');
+        return;
+      }
+      if (!form.email.value.trim()) {
+        alert('Please enter your email.');
+        return;
+      }
+      if (!form.phone.value.trim()) {
+        alert('Please enter your contact number.');
+        return;
+      }
+      if (!form.query.value.trim()) {
+        alert('Please enter your query.');
+        return;
+      }
+
+      try {
+        // Insert data into Supabase table 'contact_messages' or 'form_submissions'
+        const { data, error } = await supabase
+          .from('contact_messages')  // use 'form_submissions' if that's your table name
+          .insert([{
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            contact_number: form.phone.value.trim(),
+            query: form.query.value.trim()
+          }])
+          .select();
+
+        console.log('Supabase insert result:', data, error);
+
+        if (error) {
+          alert('There was an error submitting your query. Please try again!');
+          console.error(error);
+          return;
+        }
+        alert('Form submitted successfully!');
+        form.reset();
+
+      } catch (ex) {
+        alert('Unexpected error: ' + ex.message);
+        console.error(ex);
+      }
+    });
+  </script>
+</body>
+</html>

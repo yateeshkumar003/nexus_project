@@ -1,0 +1,7 @@
+// config.js
+
+// Base64 encoded Supabase project URL
+window.SUPABASE_URL_B64 = 'aHR0cHM6Ly9jdmtwc2RoeXdwaGhsZ3lnd3ptZi5zdXBhYmFzZS5jbw==';
+
+// Base64 encoded Supabase anon key
+window.SUPABASE_ANON_KEY_B64 = 'ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW1OMmEzQnpaR2g1ZDNCb2FHeG5lV2QzZW0xbUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTlRVek1qazBOemtzSW1WNGNDSTZNakEzTURrd05UUTNPWDAuRTItejJJYnNvSlV6aUFMNUo1U3dKYVZLbGxQTnlOWkVWWEc0cEptR3RnNA==';

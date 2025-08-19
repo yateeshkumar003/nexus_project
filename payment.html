@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Course Payment • Open Frontiers</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Fonts + Page CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+
+<!-- ░░ HEADER / NAV ░░ -->
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <img src="Logo.png" alt="Open Frontiers logo" class="brand-logo">
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu" aria-label="Open menu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+
+      <ul id="navMenu" class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+
+        <li class="has-sub">
+          <button class="sub-toggle" aria-expanded="false">Courses</button>
+            <ul class="sub-menu">
+    <li><a href="courseIntro.html">Introduction to Research & Publication</a></li>
+    <li><a href="case.html">Case Report</a></li>
+    <li><a href="Network.html">Network Metanalysis</a></li>
+    <li><a href="OriginalResearch.html">Original Research (Web-based)</a></li>
+    <li><a href="Research.html">USMLE / PLAB / AMC Aspirants</a></li>
+    <li><a href="Mentor.html">Thesis</a></li>
+    <li><a href="narrative.html">Narrative Review Article</a></li>
+    <li><a href="LOE.html">Letter to Editor</a></li>
+    <li><a href="conference.html">Conference Presentation</a></li>
+  </ul>
+        </li>
+
+        <li><a href="testmonial.html">Testimonials</a></li>
+        <li><a href="successstories.html">Success Stories</a></li>
+        <li><a href="voluntertasks.html">Volunteer Tasks</a></li>
+        <li><a href="login.html" class="btn btn-accent">Login</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ░░ PAYMENT LAYOUT ░░ -->
+<main class="page">
+  <!-- LEFT -->
+  <article class="content">
+    <h1 id="courseTitle">Course Name</h1>
+    <p class="muted">Fill in your details to complete the payment.</p>
+  </article>
+
+  <!-- RIGHT -->
+  <form class="pay-box" id="payForm" onsubmit="return handleSubmit(event)">
+    <h2>Payment Details</h2>
+
+    <label for="amount">Amount</label>
+    <input id="amount" type="text" readonly>
+
+    <label for="name">Name of Student</label>
+    <input id="name" required placeholder="Enter full name">
+
+    <label for="email">Email of Student</label>
+    <input id="email" type="email" required placeholder="example@email.com">
+
+    <label for="phone">Phone No of Student</label>
+    <input id="phone" type="tel" required placeholder="10-digit mobile">
+
+    <button type="submit" class="pay-btn" id="payBtn">Pay</button>
+
+    <div class="logos">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/UPI-logo-vector.svg" alt="UPI">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"  alt="Visa">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/RuPay_Logo_%28PNG%29.png" alt="RuPay">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Maestro_logo.svg" alt="Maestro">
+    </div>
+  </form>
+</main>
+
+<!-- ░░ FOOTER ░░ -->
+<footer id="contact" class="site-footer">
+  <div class="container footer-top">
+    <!-- Brand & social -->
+    <div class="footer-col brand-col">
+      <a href="#top" class="footer-logo"><img src="Logo.png" alt="Open Frontiers logo" style="width: 100px;"/></a>
+      <div class="footer-social">
+        <a href="https://instagram.com/" aria-label="Instagram" target="_blank" rel="noopener" class="soc soc-ig"></a>
+        <a href="https://linkedin.com/"  aria-label="LinkedIn"  target="_blank" rel="noopener" class="soc soc-li"></a>
+      </div>
+    </div>
+
+    <!-- Explore -->
+    <div class="footer-col nav-col">
+      <h4>Explore</h4>
+      <ul class="footer-list">
+        <li><a href="index.html"><span class="chev">›</span> Home</a></li>
+        <li><a href="about.html"><span class="chev">›</span> About Us</a></li>
+        <li><a href="contact.html"><span class="chev">›</span> Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Quick links -->
+    <div class="footer-col links-col">
+      <h4>Quick Links</h4>
+      <ul class="footer-list">
+        <li><a href="privacy.html"><span class="chev">›</span> Privacy Policy</a></li>
+        <li><a href="refund.html"><span class="chev">›</span> Cancellation & Refund</a></li>
+        <li><a href="terms.html"><span class="chev">›</span> Terms & Conditions</a></li>
+        <li><a href="shipping.html"><span class="chev">›</span> Shipping Policy</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-col contact-col">
+      <h4>Contact Info</h4>
+      <ul class="footer-list contact-list">
+        <li><span class="fi fi-phone"></span><a href="tel:+919075231153">+91-90752 31153</a></li>
+        <li><span class="fi fi-mail"></span><a href="mailto:info@thegoodresearchproject.com">info@thegoodresearchproject.com</a></li>
+        <li><span class="fi fi-pin"></span>Civil Lines, Nagpur&nbsp;440001, Maharashtra</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <small>© <span id="year"></span> Open Frontiers. All Rights Reserved</small>
+    <small>Designed & developed by <a href="https://justglobal.in" target="_blank" rel="noopener">Open Frontiers</a></small>
+  </div>
+</footer>
+
+<!-- WhatsApp floating pill -->
+<a class="wa-float" href="https://wa.me/+919075231153" target="_blank" rel="noopener" aria-label="WhatsApp us">
+  <span class="wa-ic"></span><span class="wa-text">WhatsApp us</span>
+</a>
+
+<script src="payment.js" defer></script>
+</body>
+</html>

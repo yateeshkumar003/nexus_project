@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login – The Good Research Project</title>
+  <meta name="description" content="Login to your The Good Research Project account to access cart, checkout, and payment history." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="config.js"></script>  <!-- config.js with base64 keys -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    .form-wrap{max-width:560px;margin:24px auto;background:rgba(255,255,255,0.05);border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+    .form-grid{display:grid;gap:12px}
+    .f-label{font-weight:600;color:#eaf7f3}
+    .f-input{width:100%;padding:12px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:#0e141b;color:#e8f1f5;outline:none}
+    .f-input:focus{box-shadow:0 0 0 2px rgba(26,188,156,0.38)}
+    .helper{color:#9FB2C3;font-size:.9rem}
+    .area{margin-top:24px;background:rgba(255,255,255,0.05);padding:18px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.25)}
+    .area h2{margin:0 0 10px}
+    .grid{display:grid;gap:12px}
+    .two{grid-template-columns:1fr 1fr}
+    .muted{color:#9FB2C3}
+    @media (max-width:680px){.two{grid-template-columns:1fr}}
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,0.08);text-align:left}
+    .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(26,188,156,0.18);color:#b8ffec;font-weight:700;font-size:.85rem}
+    .right{display:flex;justify-content:flex-end;gap:8px}
+    .center{text-align:center}
+
+    /* Buttons */
+    button, .btn {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease-in-out;
+    }
+    .btn-primary {
+      background: #ff6600;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #ff6600;
+      filter: brightness(0.95);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #ff6600;
+      color: #ff6600;
+    }
+    .btn-outline:hover {
+      background: #ff6600;
+      color: #fff;
+    }
+    .btn-secondary {
+      background: #000000;
+      color: #fff;
+    }
+    .btn-secondary:hover {
+      background: #2c3e50;
+    }
+
+    /* ---- Brand text color override (#ff6600) ---- */
+    /* Make most text orange while preserving readability for key UI elements */
+    body, h1,h2,h3,h4,h5,h6, p, small, label, input, textarea, select, a, li, th, td, span {
+      color: #110701;
+    }
+    .f-input { color: #ff6600; }
+    .f-input::placeholder { color: #ff6600; opacity: 0.7; }
+    .f-label, .helper, .muted, .badge { color: #ff6600; }
+
+    /* Keep primary/secondary button text readable (white on dark/orange) */
+    .btn-primary, .btn-secondary { color: #fff !important; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a href="index.html#top" class="brand">
+        <img src="Logo .jpg" alt="Open Frontiers logo" class="brand-logo">
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="navMenu" aria-label="Open menu">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+        <ul id="navMenu" class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li class="has-sub">
+            <button class="sub-toggle" aria-expanded="false">Courses</button>
+            <ul class="sub-menu">
+              <li><a href="index.html#courses">Research For US Residency Aspirants</a></li>
+              <li><a href="index.html#courses">Thesis Assistance For Indian PG Residents</a></li>
+              <li><a href="index.html#courses">Case Report Mentoring</a></li>
+            </ul>
+          </li>
+          <li><a href="testmonial.html">Testimonials</a></li>
+          <li><a href="successstories.html">Success Stories</a></li>
+          <li><a href="voluntertasks.html">Volunteer Tasks</a></li>
+          <li><a href="Login.html" class="btn btn-accent">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <p class="eyebrow">Account</p>
+      <h1>Login</h1>
+      <p class="helper">Login with your email or name and password to access your account.</p>
+
+      <!-- Login form -->
+      <form id="loginForm" class="form-wrap form-grid" novalidate>
+        <div>
+          <label class="f-label" for="loginId">Email or Name</label>
+          <input id="loginId" class="f-input" type="text" placeholder="you@example.com or your name" required />
+        </div>
+        <div>
+          <label class="f-label" for="loginPass">Password</label>
+          <input id="loginPass" class="f-input" type="password" placeholder="Your password" required />
+        </div>
+        <div class="right">
+          <a href="register.html" class="btn btn-outline">Register</a>
+          <button class="btn btn-primary" type="submit">Login</button>
+        </div>
+      </form>
+
+      <!-- Account Area (hidden until login) -->
+      <section id="accountArea" style="display:none">
+        <!-- Welcome -->
+        <div class="area">
+          <h2>Welcome, <span id="accName"></span> <span class="badge" id="accRole"></span></h2>
+          <p class="muted">Manage your cart, checkout, and review your payment history.</p>
+          <div class="right">
+            <button id="logoutBtn" class="btn btn-outline">Logout</button>
+          </div>
+        </div>
+
+        <!-- Cart -->
+        <div class="area">
+          <h2>Cart</h2>
+          <table class="table" id="cartTable">
+            <thead>
+              <tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th><th></th></tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr><th colspan="3" class="right">Subtotal</th><th id="cartSubtotal">₹0</th><th></th></tr>
+            </tfoot>
+          </table>
+          <div class="right" style="margin-top:10px">
+            <button id="addCourseBtn" class="btn btn-secondary">Add Sample Course</button>
+            <button id="clearCartBtn" class="btn btn-outline">Clear Cart</button>
+          </div>
+        </div>
+
+        <!-- Checkout -->
+        <div class="area grid two">
+          <div>
+            <h2>Checkout</h2>
+            <p class="muted">Confirm your order and proceed to payment.</p>
+            <div class="grid">
+              <label class="f-label" for="coName">Name</label>
+              <input id="coName" class="f-input" type="text" placeholder="Billing name" />
+              <label class="f-label" for="coEmail">Email</label>
+              <input id="coEmail" class="f-input" type="email" placeholder="Billing email" />
+              <label class="f-label" for="coNotes">Notes (optional)</label>
+              <input id="coNotes" class="f-input" type="text" placeholder="Anything we should know?" />
+            </div>
+          </div>
+          <div>
+            <h2>Payment</h2>
+            <p class="muted">Demo payment actions below (no real gateway).</p>
+            <div class="grid">
+              <button id="payNowBtn" class="btn btn-primary">Pay Now</button>
+              <button id="payLaterBtn" class="btn btn-outline">Pay Later</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment History -->
+        <div class="area">
+          <h2>Payment History</h2>
+          <table class="table" id="payTable">
+            <thead>
+              <tr><th>Date</th><th>Items</th><th>Amount</th><th>Status</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="helper">This is a local demo log. Connect to your backend to persist real payments.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Contact / Footer -->
+  <footer id="contact" class="site-footer">
+    <div class="container footer-top">
+      <!-- Brand & Social -->
+      <div class="footer-col brand-col">
+        <a href="#top" class="footer-logo">
+          <img src="Logo.png" alt="Open Frontiers logo" style="width: 100px;"/>
+        </a>
+        <div class="footer-social">
+          <a href="https://instagram.com/" aria-label="Instagram" target="_blank" rel="noopener" class="soc soc-ig"></a>
+          <a href="https://linkedin.com/" aria-label="LinkedIn" target="_blank" rel="noopener" class="soc soc-li"></a>
+        </div>
+      </div>
+
+      <!-- Explore Links -->
+      <div class="footer-col nav-col">
+        <h4>Explore</h4>
+        <ul class="footer-list">
+          <li><a href="index.html"><span class="chev">›</span> Home</a></li>
+          <li><a href="about.html"><span class="chev">›</span> About Us</a></li>
+          <li><a href="contact.html"><span class="chev">›</span> Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col links-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-list">
+          <li><a href="privacy.html"><span class="chev">›</span> Privacy Policy</a></li>
+          <li><a href="refund.html"><span class="chev">›</span> Cancellation and Refund Policy</a></li>
+          <li><a href="terms.html"><span class="chev">›</span> Terms &amp; Conditions</a></li>
+          <li><a href="shipping.html"><span class="chev">›</span> Shipping Policy</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-col contact-col">
+        <h4>Contact Info</h4>
+        <ul class="footer-list contact-list">
+          <li>
+            <span class="fi fi-phone"></span>
+            <a href="tel:+919075231153">+91-90752 31153</a>
+          </li>
+          <li>
+            <span class="fi fi-mail"></span>
+            <a href="mailto:info@thegoodresearchproject.com">info@thegoodresearchproject.com</a>
+          </li>
+          <li>
+            <span class="fi fi-pin"></span>
+            Civil Lines, Nagpur 440001, Maharashtra
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="container footer-bottom">
+      <div class="fb-left">
+        <small>© <span id="year"></span> Open Frontiers. All Rights Reserved</small>
+      </div>
+      <div class="fb-right">
+        <small>
+          Designed &amp; developed by
+          <a href="https://justglobal.in" target="_blank" rel="noopener">Open Frontiers</a>
+        </small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky WhatsApp -->
+  <a class="wa-float" href="https://wa.me/+919075231153" target="_blank" rel="noopener" aria-label="WhatsApp us">
+    <span class="wa-ic"></span>
+    <span class="wa-text">WhatsApp us</span>
+  </a>
+
+  <script>
+    // Year
+    document.getElementById('year').innerText = new Date().getFullYear();
+
+    // Mobile nav
+    const navToggle = document.querySelector('.nav-toggle');
+    const navList = document.getElementById('navMenu');
+    if (navToggle && navList) {
+      navToggle.addEventListener('click', () => {
+        const open = navList.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', open);
+      });
+    }
+
+    // Helpers
+    const $ = sel => document.querySelector(sel);
+    const usersKey = 'tgrp_users';
+    const sessionKey = 'tgrp_session';
+    const cartKey = 'tgrp_cart';
+    const payKey = 'tgrp_payments';
+
+    function loadUsers(){
+      return JSON.parse(localStorage.getItem(usersKey) || '[]');
+    }
+    function saveSession(user){
+      localStorage.setItem(sessionKey, JSON.stringify(user));
+    }
+    function getSession(){
+      const s = localStorage.getItem(sessionKey);
+      return s ? JSON.parse(s) : null;
+    }
+    function clearSession(){
+      localStorage.removeItem(sessionKey);
+    }
+
+    // Login (Supabase)
+    const SUPABASE_URL = atob(window.SUPABASE_URL_B64);
+    const SUPABASE_ANON_KEY = atob(window.SUPABASE_ANON_KEY_B64);
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const loginForm = document.getElementById('loginForm');
+
+    // (Duplicate helpers kept, as in original)
+    function saveSession(user) {
+      localStorage.setItem('tgrp_session', JSON.stringify(user));
+    }
+    function getSession() {
+      const s = localStorage.getItem('tgrp_session');
+      return s ? JSON.parse(s) : null;
+    }
+    function clearSession() {
+      localStorage.removeItem('tgrp_session');
+    }
+
+    function showAccount(user) {
+      const loginForm = document.getElementById('loginForm');
+      const accountArea = document.getElementById('accountArea');  
+      const accName = document.getElementById('accName');  
+      const accRole = document.getElementById('accRole');
+
+      accName.textContent = user.name;
+      accRole.textContent = user.role === 'student' ? 'Student' : 'Professional';
+
+      loginForm.style.display = 'none';
+      accountArea.style.display = 'block';
+
+      const coName = document.getElementById('coName');
+      const coEmail = document.getElementById('coEmail');
+      if (coName) coName.value = user.name;
+      if (coEmail) coEmail.value = user.email;
+
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.onclick = (e) => {
+          e.preventDefault();
+          clearSession();
+          showLogin();
+          window.location.href = "index.html";
+        };
+      }
+    }
+
+    /* ---- Added: define showLogin and attemptAutoLogin so existing calls work ---- */
+    function showLogin() {
+      const loginForm = document.getElementById('loginForm');
+      const accountArea = document.getElementById('accountArea');
+      if (loginForm) loginForm.style.display = 'grid';
+      if (accountArea) accountArea.style.display = 'none';
+    }
+
+    function attemptAutoLogin() {
+      const sess = getSession();
+      if (sess) {
+        showAccount(sess);
+      } else {
+        showLogin();
+      }
+    }
+    /* --------------------------------------------------------------------------- */
+
+    // Keep original listener
+    document.addEventListener('DOMContentLoaded', () => {
+      attemptAutoLogin();
+    });
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const emailOrName = document.getElementById('loginId').value.trim().toLowerCase();
+      const password = document.getElementById('loginPass').value;
+
+      const { data, error } = await supabase
+        .from('app_users')
+        .select('*')
+        .or(
+          `and(email.eq.${emailOrName},password.eq.${password}),and(name.eq.${emailOrName},password.eq.${password})`
+        )
+        .limit(1);
+
+      console.log('Inputs:', emailOrName, password);
+      console.log('Supabase result:', data);
+      console.log('Supabase error:', error);
+
+      if (error) {
+        alert('Login error: ' + error.message);
+        return;
+      }
+
+      if (data && data.length === 1) {
+        const user = data[0];
+        alert('Login successful! Welcome ' + user.name);
+
+        const { error: historyError } = await supabase
+          .from('login_history')
+          .insert([
+            { email: user.email, time: new Date().toISOString() }
+          ]);
+
+        if (historyError) {
+          console.error('Login history error:', historyError.message);
+        }
+
+        saveSession(user);
+        showAccount(user);
+      } else {
+        alert('Invalid credentials. Please try again.');
+      }
+    });
+
+    // Run auto-login on page load (kept as in original)
+    document.addEventListener('DOMContentLoaded', attemptAutoLogin);
+
+    // Cart
+    function loadCart(){
+      return JSON.parse(localStorage.getItem(cartKey) || '[]');
+    }
+    function saveCart(items){
+      localStorage.setItem(cartKey, JSON.stringify(items));
+    }
+    function formatINR(n){
+      return '₹' + (n||0).toLocaleString('en-IN');
+    }
+    function cartSubtotal(items){
+      return items.reduce((sum,i)=>sum + i.qty*i.price, 0);
+    }
+
+    const cartTableBody = document.querySelector('#cartTable tbody');
+    const cartSubtotalEl = $('#cartSubtotal');
+    const addCourseBtn = $('#addCourseBtn');
+    const clearCartBtn = $('#clearCartBtn');
+
+    function renderCart(){
+      const items = loadCart();
+      cartTableBody.innerHTML = '';
+      items.forEach((it, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${it.title}</td>
+          <td>${it.qty}</td>
+          <td>${formatINR(it.price)}</td>
+          <td>${formatINR(it.qty*it.price)}</td>
+          <td><button class="btn btn-outline" data-remove="${idx}">Remove</button></td>
+        `;
+        cartTableBody.appendChild(tr);
+      });
+      cartSubtotalEl.textContent = formatINR(cartSubtotal(items));
+      cartTableBody.querySelectorAll('button[data-remove]').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const idx = parseInt(e.currentTarget.getAttribute('data-remove'),10);
+          const items = loadCart();
+          items.splice(idx,1);
+          saveCart(items);
+          renderCart();
+        });
+      });
+    }
+
+    addCourseBtn.addEventListener('click', ()=>{
+      const items = loadCart();
+      items.push({ title:'Mentorship – Starter Cohort', qty:1, price:4999 });
+      saveCart(items);
+      renderCart();
+    });
+
+    clearCartBtn.addEventListener('click', ()=>{
+      saveCart([]);
+      renderCart();
+    });
+
+    // Payments
+    function loadPayments(){
+      return JSON.parse(localStorage.getItem(payKey) || '[]');
+    }
+    function savePayments(list){
+      localStorage.setItem(payKey, JSON.stringify(list));
+    }
+
+    const payTableBody = document.querySelector('#payTable tbody');
+    function renderPayments(){
+      const payments = loadPayments();
+      payTableBody.innerHTML = '';
+      payments.forEach(p=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${new Date(p.date).toLocaleString()}</td>
+          <td>${p.items} item(s)</td>
+          <td>${formatINR(p.amount)}</td>
+          <td>${p.status}</td>
+        `;
+        payTableBody.appendChild(tr);
+      });
+    }
+
+    const payNowBtn = $('#payNowBtn');
+    const payLaterBtn = $('#payLaterBtn');
+
+    payNowBtn.addEventListener('click', ()=>{
+      const session = getSession();
+      if (!session) { alert('Please login.'); return; }
+      const items = loadCart();
+      if (!items.length) { alert('Cart is empty.'); return; }
+      const amount = cartSubtotal(items);
+      const payments = loadPayments();
+      payments.unshift({
+        date: Date.now(),
+        items: items.length,
+        amount,
+        status: 'PAID'
+      });
+      savePayments(payments);
+      saveCart([]);
+      renderCart();
+      renderPayments();
+      alert('Payment recorded (demo). Connect a real gateway for live payments.');
+    });
+
+    payLaterBtn.addEventListener('click', ()=>{
+      const session = getSession();
+      if (!session) { alert('Please login.'); return; }
+      const items = loadCart();
+      if (!items.length) { alert('Cart is empty.'); return; }
+      const amount = cartSubtotal(items);
+      const payments = loadPayments();
+      payments.unshift({
+        date: Date.now(),
+        items: items.length,
+        amount,
+        status: 'PENDING'
+      });
+      savePayments(payments);
+      renderPayments();
+      alert('Order saved as PENDING (demo).');
+    });
+
+    // Additional original DOMContentLoaded (kept) – binds logout and calls auto-login
+    document.addEventListener('DOMContentLoaded', () => {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          clearSession();
+          showLogin();
+          window.location.href = "index.html";
+        });
+      }
+      attemptAutoLogin();
+      // Initial renders (safe regardless of session)
+      renderCart();
+      renderPayments();
+    });
+  </script>
+</body>
+</html>
